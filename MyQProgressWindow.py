@@ -1,8 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QProgressBar, QPushButton
 from PySide6.QtCore import QByteArray, Qt
 
-from PlatformDependent import *
-
 class MyQProgressWindow(QWidget):
     geo = QByteArray()
 
@@ -13,6 +11,8 @@ class MyQProgressWindow(QWidget):
                  Qt.WindowType.WindowSystemMenuHint)
 
         super().__init__(parent, f=flags)
+
+        self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
 
         self.setWindowTitle("Active downloads progress")
         
@@ -30,9 +30,10 @@ class MyQProgressWindow(QWidget):
 
     def set_value(self, value: int):
         if not self.isVisible():
-            if not MyQProgressWindow.geo.isEmpty():
+            if MyQProgressWindow.geo and not MyQProgressWindow.geo.isEmpty():
                 self.restoreGeometry(MyQProgressWindow.geo)
             self.show()
+
         self.progress_bar.setValue(value)
 
         if self.progress_bar.value() >= self.progress_bar.maximum():
