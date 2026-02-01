@@ -1,16 +1,18 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QProgressBar, QPushButton
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QProgressBar
 from PySide6.QtCore import QByteArray, Qt
 
 class MyQProgressWindow(QWidget):
     geo = QByteArray()
 
     def __init__(self, parent: QWidget, minimum: int = 0, maximum: int = 1000):
-        flags = (Qt.WindowType.Window |
-                 Qt.WindowType.WindowStaysOnTopHint |
-                 Qt.WindowType.WindowTitleHint |
-                 Qt.WindowType.WindowSystemMenuHint)
+        super().__init__()
 
-        super().__init__(parent, f=flags)
+        parent.destroyed.connect(self.deleteLater)
+
+        self.setWindowFlags(
+            Qt.WindowType.Tool |
+            Qt.WindowType.WindowStaysOnTopHint
+        )
 
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
 
@@ -22,12 +24,6 @@ class MyQProgressWindow(QWidget):
         self.progress_bar.setValue(minimum)
         layout.addWidget(self.progress_bar)
 
-        self.close_button = QPushButton("Закрыть")
-        self.close_button.clicked.connect(self.close)
-        self.close_button.hide()
-        layout.addWidget(self.close_button)
-
-
     def set_value(self, value: int):
         if not self.isVisible():
             if MyQProgressWindow.geo and not MyQProgressWindow.geo.isEmpty():
@@ -37,7 +33,6 @@ class MyQProgressWindow(QWidget):
         self.progress_bar.setValue(value)
 
         if self.progress_bar.value() >= self.progress_bar.maximum():
-            self.close_button.show()
             self.adjustSize()
 
     def add_points(self, count: int):
