@@ -41,10 +41,10 @@ class MyQFileDir:
                 f.writelines(line + '\n' for line in content)
             return True
         except LookupError:
-            qCritical(f"MyQFileDir::WriteListFile unknown codec [{encoding}]")
+            print(f"MyQFileDir::WriteListFile unknown codec [{encoding}]")
             return False
         except Exception as e:
-            qCritical(f"MyQFileDir::WriteListFile can't write to file [{file_name}]: {e}")
+            print(f"MyQFileDir::WriteListFile can't write to file [{file_name}]: {e}")
             return False
 
     @staticmethod
