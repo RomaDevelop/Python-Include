@@ -1,3 +1,5 @@
+Реомендуется использовать одновременно Способ 1 и Способ 3
+
 Способ 1 (всё работает)
 В PyCharm чере Add Content Root 
 	Settings - Project: ProjectName - Project Structure - Add Content Root - указать папку
@@ -18,9 +20,9 @@
 		# noinspection PyUnresolvedReferences (это нужно если среда выдает ошибку, что не найден модуль)
 		from MyQExecute import MyQExecute
 	
-Способ 3 (недоступны подсказки)
+Способ 3 (недоступны подсказки) (но необходимо чтобы программу можно было запустить через .venv\Scripts\python(w).exe)
 Независимый от IDE (IDE и не увидит, не будут доступны подсказки)
-	в файле проекта добавить код
+	в файле проекта добавить код (до импорта из include)
 	import sys
 	import os
 	include_dir = os.path.abspath(os.path.join(os.getcwd(), "..", "include"))
