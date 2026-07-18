@@ -1,10 +1,10 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QProgressBar
+from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QProgressBar
 from PySide6.QtCore import QByteArray, Qt
 
 class MyQProgressWindow(QWidget):
     geo = QByteArray()
 
-    def __init__(self, parent: QWidget, minimum: int = 0, maximum: int = 1000):
+    def __init__(self, parent: QWidget, title: str, minimum: int = 0, maximum: int = 1000):
         super().__init__()
 
         parent.destroyed.connect(self.deleteLater)
@@ -16,13 +16,17 @@ class MyQProgressWindow(QWidget):
 
         self.setAttribute(Qt.WidgetAttribute.WA_ShowWithoutActivating)
 
-        self.setWindowTitle("Active downloads progress")
+        self.setWindowTitle(title)
         
         layout = QVBoxLayout(self)
+
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(minimum, maximum)
         self.progress_bar.setValue(minimum)
         layout.addWidget(self.progress_bar)
+
+        self.label_under_progress_bar = QLabel()
+        layout.addWidget(self.label_under_progress_bar)
 
     def set_value(self, value: int):
         if not self.isVisible():
