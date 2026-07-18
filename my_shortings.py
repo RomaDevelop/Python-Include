@@ -4,7 +4,7 @@ def qmb_error(text):
     QMessageBox.critical(None, "Error", text)           # type: ignore
 
 def qmb_info(text):
-    QMessageBox.information(None, "Error", text)        # type: ignore
+    QMessageBox.information(None, "Info", text)        # type: ignore
 
 DateTimeFormat = "yyyy.MM.dd hh:mm:ss"
 DateTimeFormat_ms = "yyyy.MM.dd hh:mm:ss.zzz"
